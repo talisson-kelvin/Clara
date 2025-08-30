@@ -1,4 +1,4 @@
-// Lista muito maior de mensagens motivacionais
+
 const mensagensCoracao = [
     "Vai dar certo, como sempre.",
     "Você é mais forte do que pensa.",
@@ -17,7 +17,7 @@ const mensagensCoracao = [
     "Cada curva da vida te deixa mais forte e sábia."
 ];
 
-// Evento do botão flutuante
+
 document.getElementById("botao-flutuante").addEventListener("click", () => {
     const msg = mensagensCoracao[Math.floor(Math.random() * mensagensCoracao.length)];
     const p = document.getElementById("mensagem-flutuante");
@@ -28,7 +28,7 @@ document.getElementById("botao-flutuante").addEventListener("click", () => {
 });
 
 
-// Botão versículo bíblico
+
 document.getElementById("botao-biblia").addEventListener("click", () => {
     const versiculos = [
         "O Senhor é meu pastor; nada me faltará. – Salmos 23:1",
@@ -40,7 +40,7 @@ document.getElementById("botao-biblia").addEventListener("click", () => {
     document.getElementById("versiculo").textContent = versiculo;
 });
 
-// Salvar desabafo no localStorage
+
 function salvarDesabafo() {
     const text = document.getElementById("desabafo").value;
     if(text.trim() === "") return;
@@ -66,13 +66,13 @@ function limparDesabafo() {
 
 mostrarDesabafos();
 
-// Próxima corrida ao clicar no capacete
+
 document.getElementById("capacete").addEventListener("click", () => {
     const proximaCorrida = "Grande Prêmio da Itália - 7 de Setembro de 2025 🇮🇹";
     document.getElementById("proxima-corrida").textContent = "🏁 " + proximaCorrida;
 });
 
-// Efeito de pétalas caindo
+
 const petalsContainer = document.querySelector('.petals');
 setInterval(() => {
     const petal = document.createElement('div');
@@ -84,3 +84,4 @@ setInterval(() => {
     petalsContainer.appendChild(petal);
     setTimeout(() => { petal.remove(); }, 10000);
 }, 500);
+
