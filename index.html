@@ -71,7 +71,7 @@
     </section>
 
     <div id="botao-flutuante" title="Clique para receber uma mensagem ❤️">💖</div>
-<p id="mensagem-flutuante"></p>
+    <p id="mensagem-flutuante"></p>
 
     <section class="biblia">
         <h2>Palavras reconfortantes</h2>
@@ -82,9 +82,10 @@
     <section class="linha-do-tempo">
         <h2>Mini linha do tempo de corridas</h2>
         <div class="timeline">
-            <div class="race"> GP Itália - Ferrari 1º lugar</div>
-            <div class="race"> GP Alemanha - Mercedes 2º lugar</div>
-            <div class="race"> GP Japão - Ferrari 3º lugar</div>
+            <div class="race"> GP Singapura - Mercedes 1º lugar</div>
+            <div class="race"> GP Singapura - Mercedes 5º lugar</div>
+            <div class="race"> GP Singapura - Ferrari 6º lugar</div>
+            <div class="race"> GP Singapura - Ferrari 7º lugar</div>
         </div>
     </section>
 
@@ -93,6 +94,49 @@
         <p>Você não precisa resolver tudo hoje. Algumas coisas só se encaixam com o tempo, como voltas de uma corrida que parecem longas, mas levam à linha de chegada. Vai dar certo e quando der, você vai entender, cada momento.</p>
     </section>
 
+    <!-- >>> A PARTIR DAQUI: ADIÇÃO DO NOVO MUNDO MÁGICO (mantive todo o conteúdo acima exatamente igual) -->
+    <!-- Botão no final do site para abrir o Mundo Mágico (tela inteira) -->
+    <div class="mundo-final-wrap">
+        <button id="abrirMundoBtn" class="abrir-mundo">Entrar no Mundo Mágico ✨</button>
+    </div>
+
+    <!-- Mundo Mágico Fullscreen -->
+    <div id="mundoMagicoModal" class="mundo-magico-modal" aria-hidden="true" role="dialog" aria-label="Mundo Mágico">
+        <div class="mundo-magico-topbar">
+            <button id="fecharMundoBtn" class="fechar-mundo" aria-label="Fechar mundo">Voltar</button>
+        </div>
+        <div class="mundo-magico-content">
+            <div class="mundo-left">
+                <h2>Noite Mágica</h2>
+                <p class="mundo-desc">Respira. Aqui a noite abraça e as estrelas desenham promessas. Escolha uma música e deixe o coração escutar.</p>
+
+                <div class="playlist">
+                    <div class="playlist-controls">
+                        <button class="track-btn" data-id="tI9kSZgMLsc">Música 1</button>
+                        <button class="track-btn" data-id="lFxXFq2zWOo">Música 2</button>
+                        <button class="track-btn" data-id="dIuK5nOZb2o">Música 3</button>
+                    </div>
+                    <div class="player-frame">
+                        <!-- iframe será atualizado pelo JS -->
+                        <iframe id="ytEmbed" src="https://www.youtube.com/embed/tI9kSZgMLsc?rel=0&autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <div class="mundo-textos">
+                    <p class="emotional-line" id="e1">"Quando as luzes baixarem, saiba que alguém te vê e te cuida."</p>
+                    <p class="emotional-line" id="e2">"Não és sozinha meu pensamento te acompanha."</p>
+                    <p class="emotional-line" id="e3">"Cada noite revela um novo começo."</p>
+                </div>
+            </div>
+
+            <div class="mundo-canvas-wrap">
+                <canvas id="mundoCanvas"></canvas>
+                
+            </div>
+        </div>
+    </div>
+    <!-- <<< FIM DO MUNDO MÁGICO ADICIONADO -->
+
     <footer>
         Feito com carinho 💖 por alguém que acredita em você.
     </footer>
@@ -100,15 +144,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-<!-- Botão da carta secreta -->
-<div class="carta-secreta-btn" onclick="abrirCartaSecreta()">
-    ✉️
-</div>
-
-
-<div id="cartaSecretaModal" class="carta-secreta-modal">
-    <div class="carta-secreta-conteudo">
-        <span class="fechar-carta" onclick="fecharCartaSecreta()">&times;</span>
-        <div class="texto-carta" id="textoCarta"></div>
-    </div>
-</div>

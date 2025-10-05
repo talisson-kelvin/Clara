@@ -1,10 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Playfair+Display:wght@700&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     font-family: 'Quicksand', sans-serif;
@@ -13,6 +9,9 @@ body {
     color: #333;
     overflow-x: hidden;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 header {
@@ -22,11 +21,7 @@ header {
     color: white;
 }
 
-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
+header h1 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 10px; }
 
 section {
     padding: 30px 15px;
@@ -37,37 +32,13 @@ section {
     margin-bottom: 20px;
 }
 
-.icons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 10px;
-}
+.icons { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
+.icon { font-size: 2.5rem; cursor: pointer; transition: transform 0.3s ease; }
+.icon:hover { transform: scale(1.2) rotate(10deg); }
 
-.icon {
-    font-size: 2.5rem;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
+#proxima-corrida { margin-top: 10px; font-weight: bold; color: #d62828; }
 
-.icon:hover {
-    transform: scale(1.2) rotate(10deg);
-}
-
-#proxima-corrida {
-    margin-top: 10px;
-    font-weight: bold;
-    color: #d62828;
-}
-
-textarea {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    resize: none;
-}
+textarea { width: 100%; height: 100px; padding: 10px; border-radius: 10px; border: 1px solid #ccc; resize: none; }
 
 button {
     display: block;
@@ -81,12 +52,7 @@ button {
     width: 100%;
 }
 
-.card-container {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
+.card-container { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 
 .card {
     background: white;
@@ -98,193 +64,119 @@ button {
     text-align: center;
 }
 
-.dorama {
-    display: block;
-    margin-top: 5px;
-    font-style: italic;
-    font-size: 0.9rem;
-    color: #555;
-}
+.dorama { display: block; margin-top: 5px; font-style: italic; font-size: 0.9rem; color: #555; }
 
-.final p, .carta p {
-    line-height: 1.6;
-}
+.final p, .carta p { line-height: 1.6; }
 
-.timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
+.timeline { display: flex; flex-direction: column; gap: 8px; }
 
-.race {
-    background: #ffe5e5;
-    padding: 10px;
-    border-radius: 8px;
-}
+.race { background: #ffe5e5; padding: 10px; border-radius: 8px; }
 
 .petals {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 0;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
 }
 
-@keyframes fall {
-    to {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-    }
-}
+@keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
 
-/* Botão flutuante no canto inferior direito */
 #botao-flutuante {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    font-size: 2.5rem;
-    cursor: pointer;
-    z-index: 1000;
+    position: fixed; bottom: 20px; right: 20px;
+    font-size: 2.5rem; cursor: pointer; z-index: 1000;
     transition: transform 0.3s ease;
 }
-
-#botao-flutuante:hover {
-    transform: scale(1.2) rotate(10deg);
-}
+#botao-flutuante:hover { transform: scale(1.2) rotate(10deg); }
 
 #mensagem-flutuante {
-    position: fixed;
-    bottom: 70px;
-    right: 20px;
-    max-width: 250px;
-    background: rgba(214,40,40,0.9);
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 0.95rem;
-    display: none;
-    z-index: 999;
+    position: fixed; bottom: 70px; right: 20px;
+    max-width: 250px; background: rgba(214,40,40,0.9);
+    color: white; padding: 10px; border-radius: 10px;
+    font-size: 0.95rem; display: none; z-index: 999;
 }
 
 #desabafos-salvos p {
-    background: #ffe5e5;
-    margin: 8px 0;
-    padding: 10px;
-    border-radius: 8px;
+    background: #ffe5e5; margin: 8px 0; padding: 10px; border-radius: 8px;
 }
 
-@media(max-width: 600px){
-    header h1 {
-        font-size: 1.8rem;
-    }
-
-    .icon {
-        font-size: 2rem;
-    }
-
-    .card {
-        flex: 1 1 100%;
-    }
-
-    #mensagem-flutuante {
-        max-width: 180px;
-        font-size: 0.9rem;
-    }
-}
+/* Footer */
 footer {
     text-align: center;
     padding: 15px;
     background: rgba(248,249,250,0.9);
     margin-top: 20px;
     width: 100%;
-    position: relative; /* manter fixo na página se quiser */
+    position: relative;
     z-index: 10;
     font-size: 0.95rem;
 }
 
-/* Se quiser que fique sempre no fundo da tela, mesmo se a página for curta */
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+/* Mundo Mágico */
+.mundo-final-wrap { max-width: 600px; margin: 20px auto; text-align: center; }
+.abrir-mundo {
+    display: inline-block; padding: 12px 18px;
+    background: linear-gradient(135deg,#6b46c1,#2b6cb0);
+    color: white; border: none; border-radius: 999px;
+    font-size: 1rem; cursor: pointer;
+    box-shadow: 0 10px 30px rgba(43,108,176,0.2);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.abrir-mundo:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(43,108,176,0.25); }
+
+.mundo-magico-modal {
+    position: fixed; inset: 0;
+    background: rgba(5, 8, 20, 0.95);
+    z-index: 2000; display: none; color: #e6eef8;
+    overflow: hidden; backdrop-filter: blur(4px);
+}
+.mundo-magico-topbar { position: absolute; top: 16px; left: 16px; z-index: 2100; }
+.fechar-mundo {
+    background: rgba(255,255,255,0.06); color: #fff; border: 0;
+    padding: 8px 12px; border-radius: 8px; cursor: pointer;
 }
 
-main, section {
-    flex: 1 0 auto;
-}
-/* Botão da carta */
-.carta-secreta-btn {
-    position: fixed;
-    bottom: 80px;
-    left: 15px;
-    font-size: 2rem;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-    padding: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease;
-    z-index: 1000;
+.mundo-magico-content {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    padding: 80px 40px; height: 100vh; box-sizing: border-box;
 }
 
-.carta-secreta-btn:hover {
-    transform: scale(1.1);
+.mundo-left { max-width: 520px; align-self: center; }
+.mundo-left h2 { font-size: 2rem; margin-bottom: 8px; color: #fff; }
+
+.mundo-desc { margin-bottom: 18px; opacity: 0.9; }
+.playlist { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 12px; margin-bottom: 18px; }
+
+.playlist-controls { display: flex; gap: 8px; margin-bottom: 10px; }
+.track-btn {
+    background: rgba(255,255,255,0.06); color: #fff;
+    border: none; padding: 8px 10px; border-radius: 8px; cursor: pointer;
+}
+.track-btn:hover { transform: translateY(-3px); }
+
+.player-frame { width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); margin-bottom: 14px; }
+.player-frame iframe { width: 100%; height: 100%; border: 0; }
+
+.mundo-textos .emotional-line {
+    opacity: 0; transform: translateY(10px);
+    transition: all 1s ease; margin: 10px 0; font-style: italic;
 }
 
-/* Modal da carta secreta */
-.carta-secreta-modal {
-    display: none; /* escondido por padrão */
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto; /* permite scroll vertical se o conteúdo for grande */
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    box-sizing: border-box;
+.mundo-canvas-wrap {
+    position: relative; align-self: center;
+    display: flex; justify-content: center; align-items: center;
+}
+#mundoCanvas {
+    width: 100%; height: 70vh;
+    border-radius: 12px; display: block;
 }
 
-/* Conteúdo da carta */
-.carta-secreta-conteudo {
-    background-color: #fff;
-    margin: 40px auto;
-    padding: 20px;
-    border-radius: 15px;
-    max-width: 600px; /* limita a largura */
-    width: 90%; /* adapta a tela de celulares */
-    box-sizing: border-box;
-    word-wrap: break-word; /* força quebra de palavras longas */
-    white-space: pre-wrap; /* respeita quebras de linha do texto */
-    overflow-wrap: break-word; /* compatibilidade extra */
+.heart-message {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.05rem; text-align: center;
+    max-width: 60%; color: #fff;
+    text-shadow: 0 0 8px rgba(255,255,255,0.9), 0 0 20px #ff4fff;
+    line-height: 1.4; opacity: 1; pointer-events: none;
 }
-
-/* Botão de fechar */
-.fechar-carta {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 25px;
-    cursor: pointer;
-}
-/* Botão de fechar da carta */
-.fechar-carta {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 30px;
-    font-weight: bold;
-    color: #333;
-    cursor: pointer;
-    z-index: 1010; /* garante que fique acima do conteúdo */
-    background: none;
-    border: none;
-}
-
-/* Garantir que o modal tenha posição relativa para o botão ficar certo */
-.carta-secreta-conteudo {
-    position: relative; /* necessário para que o absolute do botão funcione */
+@media (max-width: 900px) {
+    #mundoCanvas { height: 55vh; margin-top: 20px; }
+    .heart-message { font-size: 0.9rem; max-width: 80%; }
 }

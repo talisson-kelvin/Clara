@@ -23,10 +23,8 @@ document.getElementById("botao-flutuante").addEventListener("click", () => {
     const p = document.getElementById("mensagem-flutuante");
     p.textContent = msg;
     p.style.display = "block";
-    // Ocultar após 5 segundos
     setTimeout(() => { p.style.display = "none"; }, 5000);
 });
-
 
 // Botão versículo bíblico
 document.getElementById("botao-biblia").addEventListener("click", () => {
@@ -43,7 +41,7 @@ document.getElementById("botao-biblia").addEventListener("click", () => {
 // Salvar desabafo no localStorage
 function salvarDesabafo() {
     const text = document.getElementById("desabafo").value;
-    if(text.trim() === "") return;
+    if (text.trim() === "") return;
     let desabafos = JSON.parse(localStorage.getItem("desabafos")) || [];
     desabafos.push(text);
     localStorage.setItem("desabafos", JSON.stringify(desabafos));
@@ -68,7 +66,7 @@ mostrarDesabafos();
 
 // Próxima corrida ao clicar no capacete
 document.getElementById("capacete").addEventListener("click", () => {
-    const proximaCorrida = "Grande Prêmio da Itália - 7 de Setembro de 2025 🇮🇹";
+    const proximaCorrida = "Grande Prêmio dos Estados Unidos - 19 de outubro de 2025 ";
     document.getElementById("proxima-corrida").textContent = "🏁 " + proximaCorrida;
 });
 
@@ -84,6 +82,7 @@ setInterval(() => {
     petalsContainer.appendChild(petal);
     setTimeout(() => { petal.remove(); }, 10000);
 }, 500);
+
 // Texto da carta
 const mensagemCarta = `
 Clara ❤️
@@ -140,3 +139,176 @@ function escreverTexto(elementId, text, speed) {
     }
     type();
 }
+
+/* ========================= */
+/* MUNDO MÁGICO (Noite - tela inteira) */
+/* ========================= */
+
+const abrirMundoBtn = document.getElementById('abrirMundoBtn');
+const mundoModal = document.getElementById('mundoMagicoModal');
+const fecharMundoBtn = document.getElementById('fecharMundoBtn');
+const ytEmbed = document.getElementById('ytEmbed');
+const trackBtns = document.querySelectorAll('.track-btn');
+const emotionalLines = document.querySelectorAll('.emotional-line');
+const mundoCanvas = document.getElementById('mundoCanvas');
+const heartMessage = document.getElementById('heartMessage');
+
+let ctx, width, height, animationId;
+
+// === Configuração Canvas ===
+function resizeCanvas() {
+    width = mundoCanvas.clientWidth;
+    height = mundoCanvas.clientHeight;
+    mundoCanvas.width = width * devicePixelRatio;
+    mundoCanvas.height = height * devicePixelRatio;
+    ctx && ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+}
+
+function initCanvas() {
+    if (!mundoCanvas) return;
+    ctx = mundoCanvas.getContext('2d');
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+}
+
+// === Coração vibrante e contínuo ===
+// === Coração roxo formado por linhas, com fundo rosa e pausa ===
+function drawHeartLines(progress) {
+    ctx.clearRect(0, 0, width, height);
+    const cx = width / 2;
+    const cy = height / 2;
+    const size = Math.min(width, height) * 0.28;
+
+    // Fórmula do coração
+    function heart(t) {
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+        return { x: cx + (x * size / 32), y: cy - (y * size / 32) };
+    }
+
+    const lines = 160; // quantidade de linhas de fundo
+    const tMax = Math.PI * 2 * progress;
+
+    // === Linhas de fundo rosa (suaves) ===
+    for (let i = 0; i < lines; i++) {
+        ctx.beginPath();
+        const startAngle = (i / lines) * Math.PI * 2;
+        const rx = cx + Math.cos(startAngle) * (size * 1.8);
+        const ry = cy + Math.sin(startAngle) * (size * 1.8);
+        ctx.moveTo(rx, ry);
+
+        for (let t = 0; t <= tMax; t += 0.05) {
+            const pos = heart(t);
+            ctx.lineTo(pos.x, pos.y);
+        }
+
+        ctx.strokeStyle = "rgba(255, 105, 180, 0.4)"; // rosa suave
+        ctx.lineWidth = 1;
+        ctx.stroke();
+    }
+
+    // === Linha principal roxa (mais grossa e brilhante) ===
+    ctx.beginPath();
+    for (let t = 0; t <= tMax; t += 0.01) {
+        const pos = heart(t);
+        if (t === 0) ctx.moveTo(pos.x, pos.y);
+        else ctx.lineTo(pos.x, pos.y);
+    }
+    ctx.strokeStyle = "rgba(186, 85, 211, 0.95)"; // roxo vibrante (mediumorchid)
+    ctx.shadowColor = "rgba(186, 85, 211, 0.8)";
+    ctx.shadowBlur = 12;
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // limpa o brilho pro resto do canvas
+    ctx.shadowBlur = 0;
+}
+
+// === Animação com pausa entre loops ===
+function animateHeart() {
+    let start = null;
+    const drawDuration = 4000; // 4s desenhando
+    const pauseDuration = 1500; // 1.5s de pausa
+    let pausing = false;
+
+    function step(ts) {
+        if (!start) start = ts;
+        const elapsed = ts - start;
+        const cycle = drawDuration + pauseDuration;
+        const progress = (elapsed % cycle) / drawDuration;
+
+        if (elapsed % cycle < drawDuration) {
+            pausing = false;
+            drawHeartLines(progress);
+        } else if (!pausing) {
+            pausing = true;
+            drawHeartLines(1); // mantém o coração completo na pausa
+        }
+
+        animationId = requestAnimationFrame(step);
+    }
+
+    cancelAnimationFrame(animationId);
+    animationId = requestAnimationFrame(step);
+}
+
+// === Textos emocionais ===
+function showEmotionalLines() {
+    emotionalLines.forEach((el, idx) => {
+        setTimeout(() => {
+            el.style.opacity = 1;
+            el.style.transform = 'translateY(0)';
+        }, 700 + idx * 800);
+    });
+}
+
+// === Abrir e Fechar Mundo ===
+abrirMundoBtn && abrirMundoBtn.addEventListener('click', () => {
+    mundoModal.style.display = 'block';
+    mundoModal.setAttribute('aria-hidden', 'false');
+    initCanvas();
+    setTimeout(() => {
+        animateHeart();
+        showEmotionalLines();
+    }, 350);
+});
+
+fecharMundoBtn && fecharMundoBtn.addEventListener('click', () => {
+    if (animationId) cancelAnimationFrame(animationId);
+    ctx && ctx.clearRect(0, 0, width, height);
+
+    // remove linhas e reseta textos
+    emotionalLines.forEach(el => {
+        el.style.opacity = 0;
+        el.style.transform = 'translateY(10px)';
+    });
+
+    // esconde o modal
+    mundoModal.style.display = 'none';
+    mundoModal.setAttribute('aria-hidden', 'true');
+
+    // pausa o YouTube
+    ytEmbed && (ytEmbed.src = ytEmbed.src.replace('&autoplay=1', ''));
+});
+
+
+// === Mudar música ===
+trackBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const id = e.currentTarget.getAttribute('data-id');
+        if (!id) return;
+        ytEmbed.src = `https://www.youtube.com/embed/${id}?rel=0&autoplay=1`;
+    });
+});
+
+// Redimensionar canvas dinamicamente
+window.addEventListener('resize', () => {
+    if (mundoModal.style.display === 'block') resizeCanvas();
+});
+
+// ESC para sair
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mundoModal.style.display === 'block') {
+        fecharMundoBtn.click();
+    }
+});
