@@ -125,7 +125,9 @@ footer {
     position: fixed; inset: 0;
     background: rgba(5, 8, 20, 0.95);
     z-index: 2000; display: none; color: #e6eef8;
-    overflow: hidden; backdrop-filter: blur(4px);
+        overflow-y: auto; /* permite rolagem vertical */
+    overflow-x: hidden;
+; backdrop-filter: blur(4px);
 }
 .mundo-magico-topbar { position: absolute; top: 16px; left: 16px; z-index: 2100; }
 .fechar-mundo {
@@ -179,4 +181,54 @@ footer {
 @media (max-width: 900px) {
     #mundoCanvas { height: 55vh; margin-top: 20px; }
     .heart-message { font-size: 0.9rem; max-width: 80%; }
+}
+/* Coração abaixo do player, centralizado e visível */
+.mundo-canvas-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px auto 20px auto;
+    position: relative;
+    z-index: 5; /* garante que fica acima do fundo */
+}
+
+/* Canvas com tamanho ideal */
+#mundoCanvas {
+    width: 90%;
+    max-width: 600px;
+    height: 60vh; /* altura boa pra desktop */
+    display: block;
+    background: transparent;
+}
+
+/* Em telas pequenas (celular) */
+@media (max-width: 600px) {
+    #mundoCanvas {
+        width: 100%;
+        height: 70vh; /* mais alto no celular */
+    }
+}
+/* Ajustes para o coração no celular */
+.mundo-canvas-wrap {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#mundoCanvas {
+    width: 100%;
+    max-width: 500px;  /* tamanho máximo no desktop */
+    height: 55vh;
+    display: block;
+}
+
+/* Ajuste para telas pequenas */
+@media (max-width: 600px) {
+    #mundoCanvas {
+        width: 100%;
+        height: 60vh;  /* aumenta a altura do coração no celular */
+    }
 }

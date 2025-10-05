@@ -266,12 +266,17 @@ function showEmotionalLines() {
 abrirMundoBtn && abrirMundoBtn.addEventListener('click', () => {
     mundoModal.style.display = 'block';
     mundoModal.setAttribute('aria-hidden', 'false');
+
+    // inicializa o canvas e limpa ele pra garantir que aparece certinho
     initCanvas();
+    ctx && ctx.clearRect(0, 0, width, height);
+
     setTimeout(() => {
         animateHeart();
         showEmotionalLines();
     }, 350);
 });
+
 
 fecharMundoBtn && fecharMundoBtn.addEventListener('click', () => {
     if (animationId) cancelAnimationFrame(animationId);
