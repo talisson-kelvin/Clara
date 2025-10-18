@@ -317,3 +317,197 @@ document.addEventListener('keydown', (e) => {
         fecharMundoBtn.click();
     }
 });
+
+/* ======= MÓDULO RESPIRA (SUBSTITUIÇÃO NÃO INTRUSIVA) ======= */
+/* Este bloco só define funções e listeners para o modal Respira.
+   Não remove nem altera outras funcionalidades do script original. */
+
+(function(){
+  // safely query elements, return null if missing
+  const $ = id => document.getElementById(id);
+
+  const abrirRespiraBtn = $('abrirRespiraBtn');
+  const fecharRespiraBtn = $('fecharRespiraBtn');
+  const respiraModal = $('respiraModal');
+  const iniciarRespiraBtn = $('iniciarRespiraBtn');
+  const pararRespiraBtn = $('pararRespiraBtn');
+  const respiraCirculo = $('respiraCirculo');
+  const respiraTexto = $('respiraTexto');
+  const respiraContador = $('respiraContador');
+  const fraseFinal = $('fraseFinal');
+  const painelSom = $('painelSom');
+  const somSim = $('somSim');
+  const somNao = $('somNao');
+  const audioRespira = $('audioRespira');
+
+  if (!respiraModal || !respiraCirculo) {
+    // required elements missing — não ativa módulo
+    console.warn('Respira: elementos necessários não encontrados. Módulo não inicializado.');
+    return;
+  }
+
+  // fases configuráveis
+  const fases = [
+    { nome: 'Inspira… 🌿', duracao: 4, scale: 1.35, bg: 'radial-gradient(circle, #b69cff 20%, #d8b4fe 100%)' },
+    { nome: 'Segura… 🤍', duracao: 7, scale: 1.0,  bg: 'radial-gradient(circle, #fff6fb 10%, #fff0f7 100%)' },
+    { nome: 'Expira… 🌸', duracao: 8, scale: 0.92, bg: 'radial-gradient(circle, #ffc6d9 20%, #ffb3c6 100%)' }
+  ];
+
+  let cicloTimer = null;
+  let contadorTimer = null;
+  let faseAtiva = false;
+  let faseIndex = 0;
+
+  function abrirModal() {
+    respiraModal.style.display = 'block';
+    respiraModal.setAttribute('aria-hidden', 'false');
+    if (respiraTexto) respiraTexto.textContent = 'Pronta?';
+    if (respiraContador) respiraContador.textContent = '';
+    respiraCirculo.style.transform = 'scale(1)';
+    if (pararRespiraBtn) pararRespiraBtn.style.display = 'none';
+    if (iniciarRespiraBtn) iniciarRespiraBtn.style.display = 'inline-block';
+  }
+
+  function fecharModal() {
+    pararSessao();
+    respiraModal.style.display = 'none';
+    respiraModal.setAttribute('aria-hidden', 'true');
+  }
+
+  function executarFase(i) {
+    clearInterval(contadorTimer);
+    const fase = fases[i];
+    let restante = fase.duracao;
+    if (respiraTexto) respiraTexto.textContent = fase.nome;
+    if (respiraContador) respiraContador.textContent = `(${restante}s)`;
+    // animação do círculo: ajusta transform e background com transição correspondente
+    respiraCirculo.style.transition = `transform ${fase.duracao}s ease-in-out, background ${fase.duracao}s ease-in-out`;
+    respiraCirculo.style.transform = `scale(${fase.scale})`;
+    respiraCirculo.style.background = fase.bg;
+    // contador por segundo
+    contadorTimer = setInterval(() => {
+      restante--;
+      if (respiraContador) respiraContador.textContent = `(${Math.max(restante,0)}s)`;
+      if (restante <= 0) {
+        clearInterval(contadorTimer);
+        faseIndex = (i + 1) % fases.length;
+        // pequena pausa natural entre fases
+        setTimeout(() => executarFase(faseIndex), 120);
+      }
+    }, 1000);
+  }
+
+  function iniciarSessao() {
+    if (faseAtiva) return;
+    faseAtiva = true;
+    faseIndex = 0;
+    if (iniciarRespiraBtn) iniciarRespiraBtn.style.display = 'none';
+    if (pararRespiraBtn) pararRespiraBtn.style.display = 'inline-block';
+    executarFase(faseIndex);
+    // timer de reinício do ciclo completo
+    const total = fases.reduce((s,f) => s + f.duracao, 0);
+    cicloTimer = setInterval(() => { faseIndex = 0; executarFase(0); }, total * 1000);
+  }
+
+  function pararSessao() {
+    faseAtiva = false;
+    clearInterval(cicloTimer);
+    clearInterval(contadorTimer);
+    if (pararRespiraBtn) pararRespiraBtn.style.display = 'none';
+    if (iniciarRespiraBtn) iniciarRespiraBtn.style.display = 'inline-block';
+    if (respiraTexto) respiraTexto.textContent = 'Pronta?';
+    if (respiraContador) respiraContador.textContent = '';
+    respiraCirculo.style.transition = 'transform .6s ease-in-out';
+    respiraCirculo.style.transform = 'scale(1)';
+    if (fraseFinal) { fraseFinal.style.opacity = 0; }
+    try { if (audioRespira) { audioRespira.pause(); audioRespira.currentTime = 0; audioRespira.src = audioRespira.src; } } catch(e){}
+  }
+
+  // Event listeners (guardados com checks de existência)
+  if (abrirRespiraBtn) abrirRespiraBtn.addEventListener('click', abrirModal);
+  if (fecharRespiraBtn) fecharRespiraBtn.addEventListener('click', fecharModal);
+  if (iniciarRespiraBtn) iniciarRespiraBtn.addEventListener('click', () => {
+    // perguntar opcional sobre som se painelSom existir
+    if (painelSom && typeof painelSom.style !== 'undefined') {
+      painelSom.style.display = 'flex';
+      painelSom.setAttribute('aria-hidden','false');
+    } else {
+      iniciarSessao();
+    }
+  });
+  if (somSim) somSim.addEventListener('click', () => {
+    if (painelSom) { painelSom.style.display = 'none'; painelSom.setAttribute('aria-hidden','true'); }
+    if (audioRespira) {
+      audioRespira.src = 'ruido marrom.mp3';
+      audioRespira.volume = 0.28;
+      audioRespira.play().catch(()=>{});
+    }
+    iniciarSessao();
+  });
+  if (somNao) somNao.addEventListener('click', () => {
+    if (painelSom) { painelSom.style.display = 'none'; painelSom.setAttribute('aria-hidden','true'); }
+    iniciarSessao();
+  });
+  if (pararRespiraBtn) pararRespiraBtn.addEventListener('click', () => {
+    pararSessao();
+    if (fraseFinal) {
+      fraseFinal.style.opacity = 1;
+      fraseFinal.textContent = 'Sessão pausada — respire quando quiser 💖';
+      setTimeout(() => { fraseFinal.style.opacity = 0; }, 3500);
+    }
+  });
+
+  // fechar com ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (painelSom && painelSom.style.display === 'flex') {
+        painelSom.style.display = 'none'; painelSom.setAttribute('aria-hidden','true');
+      } else if (respiraModal && respiraModal.style.display === 'block') {
+        fecharModal();
+      }
+    }
+  });
+
+})(); // fim IIFE do módulo Respira
+/* ======= FIM MÓDULO RESPIRA ======= */
+/* 📌 Mural dos Sonhos */
+const adicionarMetaBtn = document.getElementById('adicionarMetaBtn');
+const novaMetaInput = document.getElementById('novaMeta');
+const listaMetas = document.getElementById('listaMetas');
+
+function carregarMetas() {
+  const metas = JSON.parse(localStorage.getItem('metasClara')) || [];
+  listaMetas.innerHTML = "";
+  metas.forEach((meta, i) => {
+    const div = document.createElement('div');
+    div.className = 'meta-item';
+    div.textContent = meta;
+    div.addEventListener('click', () => removerMeta(i));
+    listaMetas.appendChild(div);
+  });
+}
+
+function salvarMeta(meta) {
+  const metas = JSON.parse(localStorage.getItem('metasClara')) || [];
+  metas.push(meta);
+  localStorage.setItem('metasClara', JSON.stringify(metas));
+  carregarMetas();
+  alert("Você plantou uma nova esperança 🌱");
+}
+
+function removerMeta(i) {
+  const metas = JSON.parse(localStorage.getItem('metasClara')) || [];
+  metas.splice(i, 1);
+  localStorage.setItem('metasClara', JSON.stringify(metas));
+  carregarMetas();
+  alert("Mais um passo concluído. Orgulhe-se disso 💖");
+}
+
+adicionarMetaBtn.addEventListener('click', () => {
+  const meta = novaMetaInput.value.trim();
+  if (!meta) return;
+  salvarMeta(meta);
+  novaMetaInput.value = "";
+});
+
+carregarMetas();

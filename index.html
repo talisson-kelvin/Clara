@@ -96,9 +96,58 @@
 
     <!-- >>> A PARTIR DAQUI: ADIÇÃO DO NOVO MUNDO MÁGICO (mantive todo o conteúdo acima exatamente igual) -->
     <!-- Botão no final do site para abrir o Mundo Mágico (tela inteira) -->
-    <div class="mundo-final-wrap">
-        <button id="abrirMundoBtn" class="abrir-mundo">Entrar no Mundo Mágico ✨</button>
+   
+<div class="mundo-final-wrap central-de-modos">
+  <button id="abrirMundoBtn" class="abrir-mundo">Entrar no Mundo Mágico ✨</button>
+  <button id="abrirRespiraBtn" class="abrir-respira">Respira e Recomeça 🌬️</button>
+</div>
+
+<!-- Modal Respira e Recomeça -->
+<div id="respiraModal" class="respira-modal" aria-hidden="true" role="dialog" aria-label="Respira e Recomeça">
+  <div class="respira-topbar">
+    <button id="fecharRespiraBtn" class="fechar-respira">Voltar</button>
+  </div>
+
+  <div class="respira-content">
+    <h2 class="respira-titulo">Respira e Recomeça 🌸</h2>
+    <p class="respira-desc">Inspira… segura… expira. Cada ciclo é um recomeço tranquilo.</p>
+
+    <!-- 🌬️ NOVO BLOCO DE GUIA DE RESPIRAÇÃO -->
+    <div class="respira-guia">
+      <div class="respira-circulo" id="respiraCirculo"></div>
+      <p id="respiraTexto" class="respira-texto">Pronta?</p>
+
+      <div class="botoes-respira">
+        <button id="iniciarRespiraBtn">Começar Respiração 🌿</button>
+        <button id="pararRespiraBtn" style="display:none;">Parar Respiração ❌</button>
+      </div>
+
+      <p class="frase-final" id="fraseFinal"></p>
     </div>
+
+    <!-- Painel para escolher som -->
+    <div id="painelSom" class="painel-som">
+      <div class="painel-conteudo">
+        <p>Deseja iniciar com o som ambiente?</p>
+        <div class="painel-botoes">
+          <button id="somSim">Sim 🎧</button>
+          <button id="somNao">Não 🌿</button>
+        </div>
+      </div>
+    </div>
+
+    <audio id="audioRespira" src="audio/ruido-marrom.mp3" loop></audio>
+
+    <!-- Mural dos Sonhos (mantido igual) -->
+    <div class="mural-sonhos">
+      <h3>📌 Mural dos Sonhos</h3>
+      <input type="text" id="novaMeta" placeholder="Escreva uma meta ou desejo...">
+      <button id="adicionarMetaBtn">Adicionar</button>
+      <div id="listaMetas"></div>
+    </div>
+  </div>
+</div>
+
 
     <!-- Mundo Mágico Fullscreen -->
     <div id="mundoMagicoModal" class="mundo-magico-modal" aria-hidden="true" role="dialog" aria-label="Mundo Mágico">
@@ -116,7 +165,7 @@
         <button class="track-btn" data-id="dIuK5nOZb2o">Música 3</button>
     </div>
     <div class="player-frame">
-        <iframe id="ytEmbed" src="https://www.youtube.com/embed/tI9kSZgMLsc?rel=0&autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe id="ytEmbed" src="https://www.youtube.com/embed/tI9kSZgMLsc?rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
 </div>
 

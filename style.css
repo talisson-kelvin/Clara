@@ -220,15 +220,299 @@ footer {
 
 #mundoCanvas {
     width: 100%;
-    max-width: 500px;  /* tamanho máximo no desktop */
+    max-width: 500px; 
     height: 55vh;
     display: block;
 }
 
-/* Ajuste para telas pequenas */
 @media (max-width: 600px) {
     #mundoCanvas {
         width: 100%;
-        height: 60vh;  /* aumenta a altura do coração no celular */
+        height: 60vh;  
     }
+}
+/* ================================ */
+/* 🌬️ MÓDULO: RESPIRA E RECOMEÇA */
+/* ================================ */
+
+.central-de-modos {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.abrir-respira {
+  background: linear-gradient(135deg, #b57edc, #ffc6d9);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255, 198, 217, 0.3);
+  transition: all 0.3s ease;
+}
+.abrir-respira:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(255, 198, 217, 0.35);
+}
+
+/* Modal */
+.respira-modal {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(246, 234, 255, 0.95), rgba(230, 210, 255, 0.9));
+  backdrop-filter: blur(6px);
+  color: #4a3b5f;
+  z-index: 3000;
+  display: none;
+  overflow-y: auto;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.respira-topbar {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+.fechar-respira {
+  background: rgba(255,255,255,0.4);
+  color: #4a3b5f;
+  border: 0;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.respira-titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #8b5cf6;
+}
+.respira-desc {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.respira-circulo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px auto;
+  position: relative;
+}
+
+.respira-circulo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffc6d9 20%, #d8b4fe 90%);
+  box-shadow: 0 0 40px rgba(214, 119, 169, 0.4);
+  transition: transform 4s ease-in-out;
+}
+
+.respira-texto {
+  position: absolute;
+  bottom: -50px;
+  font-size: 1.2rem;
+  color: #6b46c1;
+  font-weight: 600;
+}
+
+/* Mural dos Sonhos */
+.mural-sonhos {
+  margin-top: 60px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.mural-sonhos h3 {
+  color: #b57edc;
+  margin-bottom: 10px;
+}
+
+#novaMeta {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+#adicionarMetaBtn {
+  background: #b57edc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s;
+}
+#adicionarMetaBtn:hover {
+  background: #a06cd5;
+}
+
+#listaMetas {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.meta-item {
+  background: #ffe6f0;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+.meta-item:hover {
+  transform: scale(1.05);
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .respira-circulo { width: 120px; height: 120px; }
+  .respira-texto { font-size: 1rem; bottom: -40px; }
+  .mural-sonhos { width: 90%; }
+}
+/* 🌬️ NOVA VERSÃO GUIADA DO RESPIRA E RECOMEÇA */
+
+.respira-guia {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.respira-circulo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #b69cff 20%, #ffc6d9 100%);
+  box-shadow: 0 0 30px rgba(182, 156, 255, 0.4);
+  margin: 0 auto 20px;
+  transition: transform 4s ease-in-out, background 4s ease-in-out;
+  transform: scale(1);
+}
+
+.respira-texto {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #6b46c1;
+  margin-bottom: 15px;
+}
+
+.botoes-respira button {
+  background: linear-gradient(135deg, #b57edc, #ffc6d9);
+  border: none;
+  color: white;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 5px;
+  box-shadow: 0 6px 20px rgba(182, 156, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.botoes-respira button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(182, 156, 255, 0.35);
+}
+
+.frase-final {
+  margin-top: 20px;
+  font-style: italic;
+  color: #8b5cf6;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.painel-som {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  z-index: 4000;
+}
+
+.painel-conteudo {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.painel-conteudo p {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  color: #6b46c1;
+}
+
+.painel-botoes button {
+  background: linear-gradient(135deg, #b57edc, #ffc6d9);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  margin: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.painel-botoes button:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .respira-circulo { width: 120px; height: 120px; }
+  .respira-texto { font-size: 1rem; }
+}
+
+/* Correção: texto de respiração centralizado abaixo da bola */
+.respira-texto {
+  position: relative;
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* 💨 Correção de alinhamento do texto e espaçamento dos botões */
+.respira-guia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.respira-circulo {
+  margin-bottom: 25px; /* afasta a bola do texto */
+}
+
+.respira-texto {
+  margin-top: 10px;
+  margin-bottom: 25px; /* espaço antes dos botões */
+  text-align: center;
+  position: relative;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #6b46c1;
+}
+
+.botoes-respira {
+  margin-top: 5px;
 }
